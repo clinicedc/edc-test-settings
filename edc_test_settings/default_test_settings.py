@@ -67,9 +67,7 @@ class DefaultTestSettings:
             etc_dir or kwargs.get("ETC_DIR") or self.base_dir / self.app_name / "tests",
             "etc",
         )
-        self.test_dir = (
-            kwargs.get("TEST_DIR") or self.base_dir / self.app_name / "tests"
-        )
+        self.test_dir = kwargs.get("TEST_DIR") or self.base_dir / self.app_name / "tests"
 
         self.settings = dict(
             APP_NAME=self.app_name,
@@ -88,9 +86,7 @@ class DefaultTestSettings:
 
         self.update_root_urlconf(use_test_urls)
         if not add_multisite_middleware:
-            self.settings["MIDDLEWARE"].remove(
-                "multisite.middleware.DynamicSiteMiddleware"
-            )
+            self.settings["MIDDLEWARE"].remove("multisite.middleware.DynamicSiteMiddleware")
 
         if add_dashboard_middleware:
             self.settings["MIDDLEWARE"].extend(
@@ -192,9 +188,7 @@ class DefaultTestSettings:
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=SiteID(default=1) if SiteID else 1,
-            SILENCED_SYSTEM_CHECKS=[
-                "sites.E101"
-            ],  # The SITE_ID setting must be an integer
+            SILENCED_SYSTEM_CHECKS=["sites.E101"],  # The SITE_ID setting must be an integer
             SECRET_KEY=uuid4().hex,
             HOLIDAY_FILE=self.base_dir / self.app_name / "tests" / "holidays.csv",
             INDEX_PAGE_LABEL="",
@@ -257,7 +251,9 @@ class DefaultTestSettings:
                 os.mkdir(key_path)
             auto_create_keys = True if len(os.listdir(key_path)) == 0 else False
             self.settings.update(
-                DEBUG=False, KEY_PATH=key_path, AUTO_CREATE_KEYS=auto_create_keys
+                DEBUG=False,
+                DJANGO_CRYPTO_FIELDS_KEY_PATH=key_path,
+                AUTO_CREATE_KEYS=auto_create_keys,
             )
 
     def check_github_actions(self):
