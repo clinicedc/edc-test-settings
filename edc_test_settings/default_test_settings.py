@@ -28,6 +28,30 @@ def get_migrations_module():
 
 
 class DefaultTestSettings:
+    """Return settings with reasonable defaults.
+
+    Expects a project structure where the root is the repo
+    and the application is a sub-folder of the repo. For example:
+
+      edc-crf/edc_crf/
+      edc-crf/edc_crf/tests/
+      edc-crf/edc_crf/tests/holiday.csv
+      edc-crf/edc_crf/tests/tests_settings.py
+      edc-crf/edc_crf/tests/models.py
+      edc-crf/edc_crf/tests/urls.py
+      edc-crf/edc_crf/tests/etc/
+      edc-crf/edc_crf/tests/tests/
+      edc-crf/edc_crf/tests/tests/test_crfs.py
+
+      this implies
+
+      GIT_DIR = edc-crf/
+      BASE_DIR = edc-crf/
+      HOLIDAY_DIR = edc-crf/edc_crf/tests/
+      ETC_DIR = edc-crf/edc_crf/tests/etc
+
+    """
+
     def __init__(
         self,
         base_dir=None,
@@ -63,18 +87,17 @@ class DefaultTestSettings:
         except ValueError:
             pass
         self.installed_apps.append("edc_appconfig.apps.AppConfig")
-        self.etc_dir = (
-            etc_dir or kwargs.get("ETC_DIR") or self.base_dir / self.app_name / "tests",
-            "etc",
-        )
-        self.test_dir = kwargs.get("TEST_DIR") or self.base_dir / self.app_name / "tests"
 
         self.settings = dict(
             APP_NAME=self.app_name,
             BASE_DIR=self.base_dir,
             INSTALLED_APPS=self.installed_apps,
-            ETC_DIR=self.etc_dir,
-            TEST_DIR=self.test_dir,
+            ETC_DIR=kwargs.get("ETC_DIR") or self.base_dir / self.app_name / "tests" / "etc",
+            TEST_DIR=kwargs.get("TEST_DIR") or self.base_dir / self.app_name / "tests",
+            HOLIDAY_FILE=(
+                kwargs.get("HOLIDAY_FILE")
+                or self.base_dir / self.app_name / "tests" / "holidays.csv"
+            ),
         )
 
         self._update_defaults()
@@ -190,7 +213,6 @@ class DefaultTestSettings:
             SITE_ID=SiteID(default=1) if SiteID else 1,
             SILENCED_SYSTEM_CHECKS=["sites.E101"],  # The SITE_ID setting must be an integer
             SECRET_KEY=uuid4().hex,
-            HOLIDAY_FILE=self.base_dir / self.app_name / "tests" / "holidays.csv",
             INDEX_PAGE_LABEL="",
             DASHBOARD_URL_NAMES={},
             DASHBOARD_BASE_TEMPLATES={},
