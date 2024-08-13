@@ -15,12 +15,14 @@ except ModuleNotFoundError:
     SiteID = None
 
 
-class DisableMigrations:
+class DisableMigrations(dict):
+    except_apps = {"sites", "edc_sites", "edc_qareports"}
+
     def __contains__(self, item):
-        return True
+        return item not in self.except_apps
 
     def __getitem__(self, item):
-        return None
+        return super().__getitem__(item) if item in self.except_apps else None
 
 
 def get_migrations_module():
