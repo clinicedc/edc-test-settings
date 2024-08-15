@@ -16,13 +16,12 @@ except ModuleNotFoundError:
 
 
 class DisableMigrations(dict):
-    except_apps = {"sites", "edc_sites", "edc_qareports"}
 
     def __contains__(self, item):
-        return item not in self.except_apps
+        return True
 
     def __getitem__(self, item):
-        return super().__getitem__(item) if item in self.except_apps else None
+        return None
 
 
 def get_migrations_module():
