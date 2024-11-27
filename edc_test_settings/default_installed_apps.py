@@ -14,6 +14,8 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "multisite",
     "simple_history",
     "storages",
+    "django_pylabels.apps.AppConfig",
+    "edc_pylabels.apps.AppConfig",
     "edc_sites.apps.AppConfig",
     "edc_action_item.apps.AppConfig",
     "edc_appointment.apps.AppConfig",
