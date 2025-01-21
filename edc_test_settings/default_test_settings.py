@@ -207,7 +207,6 @@ class DefaultTestSettings:
             USE_L10N=True,
             USE_TZ=True,
             DEFAULT_AUTO_FIELD="django.db.models.BigAutoField",
-            EDC_BOOTSTRAP=3,
             GIT_DIR=self.base_dir,
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
