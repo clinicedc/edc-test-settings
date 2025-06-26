@@ -258,6 +258,8 @@ class DefaultTestSettings:
             EDC_RANDOMIZATION_LIST_PATH=self.base_dir / self.app_name / "tests" / "etc",
             EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=True,
             EDC_RANDOMIZATION_SKIP_VERIFY_CHECKS=True,
+            EDC_DATA_MANAGER_POPULATE_DATA_DICTIONARY=False,
+            EDC_VISIT_SCHEDULE_POPULATE_VISIT_SCHEDULE=True,
             EDC_SITES_MODULE_NAME=None,
             MULTISITE_REGISTER_POST_MIGRATE_SYNC_ALIAS=False,
             DATA_DICTIONARY_APP_LABELS=[],

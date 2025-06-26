@@ -53,6 +53,7 @@ DEFAULT_EDC_INSTALLED_APPS = [
     "edc_registration.apps.AppConfig",
     "edc_reportable.apps.AppConfig",
     "edc_pdf_reports.apps.AppConfig",
+    "edc_qareports.apps.AppConfig",
     "edc_review_dashboard.apps.AppConfig",
     "edc_subject_dashboard.apps.AppConfig",
     "edc_timepoint.apps.AppConfig",
