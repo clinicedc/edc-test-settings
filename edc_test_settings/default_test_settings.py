@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import os
 import sys
+from datetime import datetime
 from typing import List
 from uuid import uuid4
+from zoneinfo import ZoneInfo
 
 from dateutil.relativedelta import relativedelta
 
@@ -93,7 +95,8 @@ class DefaultTestSettings:
             APP_NAME=self.app_name,
             BASE_DIR=self.base_dir,
             INSTALLED_APPS=self.installed_apps,
-            ETC_DIR=kwargs.get("ETC_DIR") or self.base_dir / self.app_name / "tests" / "etc",
+            ETC_DIR=kwargs.get("ETC_DIR")
+            or self.base_dir / self.app_name / "tests" / "etc",
             TEST_DIR=kwargs.get("TEST_DIR") or self.base_dir / self.app_name / "tests",
             HOLIDAY_FILE=(
                 kwargs.get("HOLIDAY_FILE")
@@ -110,7 +113,9 @@ class DefaultTestSettings:
 
         self.update_root_urlconf(use_test_urls)
         if not add_multisite_middleware:
-            self.settings["MIDDLEWARE"].remove("multisite.middleware.DynamicSiteMiddleware")
+            self.settings["MIDDLEWARE"].remove(
+                "multisite.middleware.DynamicSiteMiddleware"
+            )
 
         if add_dashboard_middleware:
             self.settings["MIDDLEWARE"].extend(
@@ -168,7 +173,7 @@ class DefaultTestSettings:
     def _update_defaults(self):
         """Assumes BASE_DIR, APP_NAME are in kwargs."""
 
-        from edc_utils.date import get_utcnow
+        utcnow = datetime.now().astimezone(ZoneInfo("UTC"))
 
         context_processors = self.default_context_processors
         context_processors.extend(self.edc_context_processors)
@@ -211,7 +216,9 @@ class DefaultTestSettings:
             LIVE_SYSTEM=False,
             REVIEWER_SITE_ID=0,
             SITE_ID=SiteID(default=1) if SiteID else 1,
-            SILENCED_SYSTEM_CHECKS=["sites.E101"],  # The SITE_ID setting must be an integer
+            SILENCED_SYSTEM_CHECKS=[
+                "sites.E101"
+            ],  # The SITE_ID setting must be an integer
             SECRET_KEY=uuid4().hex,
             INDEX_PAGE_LABEL="",
             DASHBOARD_URL_NAMES={},
@@ -244,11 +251,11 @@ class DefaultTestSettings:
             EDC_NAVBAR_DEFAULT=self.app_name,
             EDC_PROTOCOL_PROJECT_NAME="EDC TEST PROJECT",
             EDC_PROTOCOL_STUDY_OPEN_DATETIME=(
-                get_utcnow().replace(microsecond=0, second=0, minute=0, hour=0)
+                utcnow.replace(microsecond=0, second=0, minute=0, hour=0)
                 - relativedelta(years=1)
             ),
             EDC_PROTOCOL_STUDY_CLOSE_DATETIME=(
-                get_utcnow().replace(microsecond=999999, second=59, minute=59, hour=11)
+                utcnow.replace(microsecond=999999, second=59, minute=59, hour=11)
                 + relativedelta(years=1)
             ),
             EDC_PROTOCOL_NUMBER="101",
