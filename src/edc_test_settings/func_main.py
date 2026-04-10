@@ -19,7 +19,8 @@ def func_main(project_settings, *project_tests):
     failfast = any([True for t in sys.argv if t.startswith("--failfast")])
     keepdb = any([True for t in sys.argv if t.startswith("--keepdb")])
     opts = dict(failfast=failfast, tags=tags, keepdb=keepdb)
-    failures = DiscoverRunner(**opts).run_tests(project_tests)
+    cli_tests = [t for t in sys.argv[1:] if not t.startswith("-")]
+    failures = DiscoverRunner(**opts).run_tests(cli_tests or project_tests)
     sys.exit(failures)
 
 
@@ -33,5 +34,6 @@ def func_main2(django_settings_module: str, *project_tests: str):
     failfast = any([True for t in sys.argv if t.startswith("--failfast")])
     keepdb = any([True for t in sys.argv if t.startswith("--keepdb")])
     opts = dict(failfast=failfast, tags=tags, keepdb=keepdb)
-    failures = DiscoverRunner(**opts).run_tests(project_tests)
+    cli_tests = [t for t in sys.argv[1:] if not t.startswith("-")]
+    failures = DiscoverRunner(**opts).run_tests(cli_tests or project_tests)
     sys.exit(failures)
