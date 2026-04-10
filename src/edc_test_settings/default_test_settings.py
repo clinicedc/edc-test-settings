@@ -262,6 +262,7 @@ class DefaultTestSettings:
             EDC_FACILITY_USE_DEFAULTS=True,
             EDC_FACILITY_DEFAULT_FACILITY_NAME="7-day-clinic",
             LIST_MODEL_APP_LABEL=self.app_name.replace("edc", "lists"),
+            EDC_LTFU_MODEL_NAME="edc_ltfu.ltfu",
             EDC_RANDOMIZATION_LIST_PATH=self.base_dir / self.app_name / "tests" / "etc",
             EDC_RANDOMIZATION_REGISTER_DEFAULT_RANDOMIZER=True,
             EDC_RANDOMIZATION_SKIP_VERIFY_CHECKS=True,
