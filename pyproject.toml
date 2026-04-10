@@ -9,7 +9,7 @@ namespace = false
 
 [project]
 name = "edc-test-settings"
-version = "2.0.0"
+version = "2.1.0"
 description = "Class and functions for tests for clinicedc/edc projects"
 keywords = ['Django', 'clinicedc', 'tests']
 readme = {file = "README.rst", content-type = "text/x-rst"}
